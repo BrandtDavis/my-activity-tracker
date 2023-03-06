@@ -1,5 +1,6 @@
 import requests
 import os
+import dotenv
 from dotenv import load_dotenv
 from pprint import pprint
 
@@ -24,7 +25,7 @@ def authorize_user():
     response = requests.post(authUrl, params=params)
     return response.json()
 
-def refresh_user_access():
+def get_new_access_token():
     load_dotenv()
 
     authUrl = 'https://www.strava.com/oauth/token'
@@ -34,19 +35,29 @@ def refresh_user_access():
     refreshToken = os.getenv("REFRESH_TOKEN")
 
     params = {
-        'client_id': clientId,
-        'client_secret': clientSecret,
-        'refresh_token': refreshToken,
-        'grant_type': 'refresh_token'
+    'client_id': clientId,
+    'client_secret': clientSecret,
+    'refresh_token': refreshToken,
+    'grant_type': 'refresh_token'
     }
 
     response = requests.post(authUrl, params=params)
     
     # ** Investigate why this doesn't work **
     # json_response = response.json()
-    pprint(response.__dict__)
-    return response.json()
+    # pprint(response.__dict__)
+    return response.json()['access_token']
 
-response = refresh_user_access()
-#pprint(response)
+
+def refresh_user_access():
+    load_dotenv()
+    dotenvFile = dotenv.find_dotenv()
+
+    newAccessToken = get_new_access_token()
+    print(newAccessToken)
+    dotenv.set_key(dotenvFile, "ACCESS_TOKEN", newAccessToken)
+
+
+refresh_user_access()
+
 
