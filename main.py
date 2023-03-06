@@ -3,9 +3,6 @@ import requests
 import os
 from dotenv import load_dotenv
 
-import time
-import swagger_client
-from swagger_client.rest import ApiException
 from pprint import pprint
 
 load_dotenv()
