@@ -6,19 +6,9 @@ from dotenv import load_dotenv
 from pprint import pprint
 
 from authorization import refresh_user_access
+from activities import getAllUserActivites
 
-load_dotenv()
-
-activitiesUrl = 'https://www.strava.com/api/v3/athlete/activities'
-
-token = os.getenv("ACCESS_TOKEN")
-# headers = {"Authorization": f"Bearer {token}"}
-
-params = {
-    'access_token': os.getenv("ACCESS_TOKEN")
-}
-response = requests.get(activitiesUrl, params=params)
-json_response = response.json()
+json_response = getAllUserActivites()
 
 if json_response['code'] == 'invalid' and json_response['field'] == 'access_token':
     print("Invalid token, attempting refresh...")
