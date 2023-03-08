@@ -1,5 +1,3 @@
-# from __future__ import print_statement
-import requests
 import os
 from dotenv import load_dotenv
 

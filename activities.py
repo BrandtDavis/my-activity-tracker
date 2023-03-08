@@ -5,14 +5,11 @@ from dotenv import load_dotenv
 
 from pprint import pprint
 
-from authorization import refresh_user_access
 
 def getAllUserActivites():
     load_dotenv()
 
     activitiesUrl = 'https://www.strava.com/api/v3/athlete/activities'
-
-    token = os.getenv("ACCESS_TOKEN")
 
     params = {
         'access_token': os.getenv("ACCESS_TOKEN")
