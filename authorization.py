@@ -20,10 +20,9 @@ def authorize_user():
         'grant_type': 'authorization_code'
     }
 
-    # headers = {"Authorization": f"Bearer {token}"}
-
     response = requests.post(authUrl, params=params)
     return response.json()
+
 
 def get_new_access_token():
     load_dotenv()
@@ -54,7 +53,6 @@ def refresh_user_access():
     dotenvFile = dotenv.find_dotenv()
 
     newAccessToken = get_new_access_token()
-    print(newAccessToken)
     dotenv.set_key(dotenvFile, "ACCESS_TOKEN", newAccessToken)
 
 
