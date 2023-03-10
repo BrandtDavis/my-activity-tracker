@@ -14,7 +14,8 @@ def getAllUserActivites():
     params = {
         'access_token': os.getenv("ACCESS_TOKEN")
     }
-    response = requests.get(activitiesUrl, params=params)
-    return response.json()
+    response = requests.get(activitiesUrl, params=params).json()
+    return response
+
 
 
