@@ -4,9 +4,10 @@ from dotenv import load_dotenv
 from pprint import pprint
 
 from authorization import refresh_user_access
-from activities import getAllUserActivites
+from Athlete import getAllUserActivites
 
 json_response = getAllUserActivites()
+# print(json_response[0]['map'])
 
 # if json_response.errors and json_response.errors.code == 'invalid':
 #     print("Invalid token, attempting refresh...")

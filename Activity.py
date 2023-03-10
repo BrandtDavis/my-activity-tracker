@@ -1,11 +1,11 @@
 import json
 
 class Activity:
-    def __init__():
-        pass
-    
-    def getPolyline(activity):
+    def __init__(self):
         pass
 
-    def getActivityCountByType():
+    def getPolyline(self, activity):
+        pass
+
+    def getActivityCountByType(self):
         pass
