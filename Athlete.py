@@ -25,8 +25,13 @@ def getAllUserActivites():
         pageNum+=1
 
         if len(activities) < 200: break
-
     return responses
 
+def getAllRunBasedActivities(activities):
+    runs = []
+    for activity in activities:
+        if activity['type'] == "Run" or activity['type'] == "Trail Run":
+            runs.append(activity)
+    return runs
 
 
