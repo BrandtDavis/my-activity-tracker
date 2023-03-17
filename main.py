@@ -4,9 +4,8 @@ from dotenv import load_dotenv
 from pprint import pprint
 
 from authorization import refresh_user_access
-from Athlete import getAllUserActivites
+from Athlete import getAllUserActivites, getAllRunBasedActivities
 
-json_response = getAllUserActivites()
 # print(json_response[0]['map'])
 
 # if json_response.errors and json_response.errors.code == 'invalid':
@@ -14,7 +13,7 @@ json_response = getAllUserActivites()
 #     originalToken = os.getenv("ACCESS_TOKEN")
 
     # refresh access token
-    # response = refresh_user_access()
+# response = refresh_user_access()
     # newToken = os.getenv("ACCESS_TOKEN")
 
     
@@ -24,7 +23,18 @@ json_response = getAllUserActivites()
     # else:
     #     print("Could not create new token, exitting") 
 
+activities = getAllUserActivites()
 
-pprint(json_response[0]['map'])
+print(len(activities))
+
+
+
+# pprint(activities[3]['type'])
+runs = getAllRunBasedActivities(activities)
+pprint(len(runs))
+# pprint(runs[10464)
+
+
+
 
 
