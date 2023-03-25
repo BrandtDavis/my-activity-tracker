@@ -74,6 +74,8 @@ class Authorization:
         dotenvFile = dotenv.find_dotenv()
 
         newAccessToken = self.get_new_access_token()
+        
+        print("Resetting User Access Token...")
         dotenv.set_key(dotenvFile, "ACCESS_TOKEN", newAccessToken)
 
 
