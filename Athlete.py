@@ -19,7 +19,13 @@ def getAllUserActivites():
             'page': pageNum
         }
 
-        activities = requests.get(activitiesUrl, params=params).json()
+        try:
+            activities = requests.get(activitiesUrl, params=params).json()
+
+        except requests.exceptions.ConnectionError: 
+            print("Connection error on Activities request :(")
+            break
+        
         responses = responses + activities
         
         pageNum+=1

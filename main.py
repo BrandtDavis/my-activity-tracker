@@ -9,9 +9,9 @@ from Athlete import getAllUserActivites, getAllRunBasedActivities
 auth = Authorization()
 auth.authorize_user()
 
-# activities = getAllUserActivites()
+activities = getAllUserActivites()
 
-# print(len(activities))
+print(len(activities))
 
 
 
