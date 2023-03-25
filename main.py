@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 
 from pprint import pprint
 
-from authorization import refresh_user_access
+from Authorization import refresh_user_access
 from Athlete import getAllUserActivites, getAllRunBasedActivities
 
 # print(json_response[0]['map'])
@@ -23,9 +23,9 @@ from Athlete import getAllUserActivites, getAllRunBasedActivities
     # else:
     #     print("Could not create new token, exitting") 
 
-activities = getAllUserActivites()
+# activities = getAllUserActivites()
 
-print(len(activities))
+# print(len(activities))
 
 
 
