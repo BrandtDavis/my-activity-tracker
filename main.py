@@ -3,25 +3,11 @@ from dotenv import load_dotenv
 
 from pprint import pprint
 
-from Authorization import refresh_user_access
+from Authorization import Authorization
 from Athlete import getAllUserActivites, getAllRunBasedActivities
 
-# print(json_response[0]['map'])
-
-# if json_response.errors and json_response.errors.code == 'invalid':
-#     print("Invalid token, attempting refresh...")
-#     originalToken = os.getenv("ACCESS_TOKEN")
-
-    # refresh access token
-# response = refresh_user_access()
-    # newToken = os.getenv("ACCESS_TOKEN")
-
-    
-    # if valid, carry on, else exit gracefully
-    # if(originalToken != newToken):
-    #     print("Token updated successfully")
-    # else:
-    #     print("Could not create new token, exitting") 
+auth = Authorization()
+auth.authorize_user()
 
 # activities = getAllUserActivites()
 
@@ -30,8 +16,8 @@ from Athlete import getAllUserActivites, getAllRunBasedActivities
 
 
 # pprint(activities[3]['type'])
-runs = getAllRunBasedActivities(activities)
-pprint(len(runs))
+# runs = getAllRunBasedActivities(activities)
+# pprint(len(runs))
 # pprint(runs[10464)
 
 
