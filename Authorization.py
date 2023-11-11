@@ -26,7 +26,6 @@ class Authorization:
             'client_secret': self.clientSecret,
             'code': self.authCode
         }
-        # pass
 
     def authenticateUser(self):
         authUrl = 'https://www.strava.com/oauth/token'
