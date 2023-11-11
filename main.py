@@ -7,7 +7,7 @@ from Authorization import Authorization
 from Athlete import getAllUserActivites, getAllRunBasedActivities
 
 auth = Authorization()
-auth.authorize_user()
+auth.authenticateUser()
 
 activities = getAllUserActivites()
 
@@ -18,7 +18,6 @@ print(len(activities))
 # pprint(activities[3]['type'])
 # runs = getAllRunBasedActivities(activities)
 # pprint(len(runs))
-# pprint(runs[10464)
 
 
 
