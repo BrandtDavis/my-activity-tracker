@@ -1,3 +1,4 @@
+import datetime
 import requests
 import os
 import dotenv
@@ -7,78 +8,82 @@ from pprint import pprint
 class Authorization:
 
     def __init__(self):
-        pass
-
-    def authorize_user(self):
         load_dotenv()
+        self.envFile = dotenv.find_dotenv()
+        
+        self.authUrl = 'https://www.strava.com/oauth/token'
 
+        self.clientId = os.getenv("CLIENT_ID")
+        self.clientSecret = os.getenv("CLIENT_SECRET")
+        self.authCode = os.getenv("AUTHORIZATION_CODE")
+
+        self.accessToken = os.getenv("ACCESS_TOKEN")
+        self.refreshToken = os.getenv("REFRESH_TOKEN")
+
+    def getBaseAuthParams(self):
+       return {
+            'client_id': self.clientId,
+            'client_secret': self.clientSecret,
+            'code': self.authCode
+        }
+        # pass
+
+    def authenticateUser(self):
         authUrl = 'https://www.strava.com/oauth/token'
 
-        clientId = os.getenv("CLIENT_ID")
-        clientSecret = os.getenv("CLIENT_SECRET")
-        authCode = os.getenv("AUTHORIZATION_CODE")
+        params = self.getBaseAuthParams()
+        params['grant_type'] = 'authorization_code'
 
-        params = {
-            'client_id': clientId,
-            'client_secret': clientSecret,
-            'code': authCode,
-            'grant_type': 'authorization_code'
-        }
-
+        # Error response for reference:
         # {'message': 'Bad Request', 'errors': [{'resource': 'AuthorizationCode', 'field': 'code', 'code': 'invalid'}]}
         try:
+            print('Authenticating User')
+            
             response = requests.post(authUrl, params=params).json()
+            print(response)
+            
             if response['errors']:
                 errorList = response['errors']
+
                 if errorList[0]['resource'] == "AuthorizationCode" and errorList[0]['code'] == 'invalid':
                     print("Invalid Auth code, attempting refresh...")
-                    response = self.refresh_user_access()
+                    self.refreshUserAccess()
+                
                 else:
                     print("Unknown error :(")
-
-            return response
+                    return "Error"
         
         except requests.exceptions.ConnectionError:
+            print('Connection Error')
             return 'Connection Error'
 
 
 
-    def get_new_access_token(self):
-        load_dotenv()
-
-        authUrl = 'https://www.strava.com/oauth/token'
-
-        clientId = os.getenv("CLIENT_ID")
-        clientSecret = os.getenv("CLIENT_SECRET")
-        refreshToken = os.getenv("REFRESH_TOKEN")
-
-        params = {
-        'client_id': clientId,
-        'client_secret': clientSecret,
-        'refresh_token': refreshToken,
-        'grant_type': 'refresh_token'
-        }
+    def getNewAccessToken(self):
+        params = self.getBaseAuthParams()
+        params['refresh_token'] = self.refreshToken
+        params['grant_type'] = 'refresh_token'
 
         try:
-            response = requests.post(authUrl, params=params)
+            response = requests.post(self.authUrl, params=params)
+            print(f"Refresh Response: {response.json()}")
+            print("Received Access Token: ", response.json()['access_token'])
             return response.json()['access_token']
+        
         except ConnectionRefusedError:
+            print('Connection Refused')
             return 'Connection Refused'
+        
         # ** Investigate why this doesn't work **
         # json_response = response.json()
         # pprint(response.__dict__)
 
 
-    def refresh_user_access(self):
-        load_dotenv()
-        dotenvFile = dotenv.find_dotenv()
-
-        newAccessToken = self.get_new_access_token()
-        
+    def refreshUserAccess(self):
         print("Resetting User Access Token...")
-        dotenv.set_key(dotenvFile, "ACCESS_TOKEN", newAccessToken)
+        newAccessToken = self.getNewAccessToken()
 
+        dotenv.set_key(self.envFile, "ACCESS_TOKEN", newAccessToken)
 
-    # refresh_user_access()
 
 
