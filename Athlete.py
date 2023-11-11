@@ -3,7 +3,14 @@ import requests
 import os
 from dotenv import load_dotenv
 
+# TODO
+# def getAuthenticatedAthlete():
 
+#     params = {
+#         # 'access_token': os.getenv('ACCESS_TOKEN'),
+#         # 'per_page': 200,
+#         # 'page': pageNum
+#     }
 
 def getAllUserActivites():
     load_dotenv()
@@ -14,7 +21,7 @@ def getAllUserActivites():
 
     while(1):
         params = {
-            'access_token': os.getenv("ACCESS_TOKEN"),
+            'access_token': os.getenv('ACCESS_TOKEN'),
             'per_page': 200,
             'page': pageNum
         }
@@ -25,9 +32,8 @@ def getAllUserActivites():
         except requests.exceptions.ConnectionError: 
             print("Connection error on Activities request :(")
             break
-        
+
         responses = responses + activities
-        
         pageNum+=1
 
         if len(activities) < 200: break
