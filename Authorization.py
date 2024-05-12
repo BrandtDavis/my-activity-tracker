@@ -45,7 +45,7 @@ class Authorization:
                 errorList = response['errors']
 
                 if errorList[0]['resource'] == "AuthorizationCode" and errorList[0]['code'] == 'invalid':
-                    print("Invalid Auth code, attempting refresh...")
+                    print("Invalid Auth code, attempting refresh")
                     self.refreshUserAccess()
                 
                 else:
@@ -66,7 +66,7 @@ class Authorization:
         try:
             response = requests.post(self.authUrl, params=params)
             print(f"Refresh Response: {response.json()}")
-            print("Received Access Token: ", response.json()['access_token'])
+            # print("Received Access Token: ", response.json()['access_token'])
             return response.json()['access_token']
         
         except ConnectionRefusedError:
