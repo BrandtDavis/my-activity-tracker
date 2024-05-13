@@ -3,14 +3,17 @@ import requests
 import os
 from dotenv import load_dotenv
 
-# TODO
-# def getAuthenticatedAthlete():
+def getAuthenticatedAthlete():
+    load_dotenv()
 
-#     params = {
-#         # 'access_token': os.getenv('ACCESS_TOKEN'),
-#         # 'per_page': 200,
-#         # 'page': pageNum
-#     }
+    url = f"https://www.strava.com/api/v3/athlete"
+
+    headers = {
+        'Authorization': f"Bearer {os.getenv('ACCESS_TOKEN')}",
+    }
+
+    athlete = requests.get(url, headers=headers).json()
+    return athlete
 
 def getAllUserActivites():
     load_dotenv()
@@ -33,6 +36,7 @@ def getAllUserActivites():
             print("Connection error on Activities request :(")
             break
 
+        print(responses)
         responses = responses + activities
         pageNum+=1
 
