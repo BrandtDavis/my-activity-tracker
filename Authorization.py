@@ -53,7 +53,6 @@ class Authorization:
                     return "Error"
         
         except requests.exceptions.ConnectionError:
-            print('Connection Error')
             return 'Connection Error'
 
 
@@ -66,17 +65,12 @@ class Authorization:
         try:
             response = requests.post(self.authUrl, params=params)
             print(f"Refresh Response: {response.json()}")
-            # print("Received Access Token: ", response.json()['access_token'])
             return response.json()['access_token']
         
         except ConnectionRefusedError:
             print('Connection Refused')
             return 'Connection Refused'
         
-        # ** Investigate why this doesn't work **
-        # json_response = response.json()
-        # pprint(response.__dict__)
-
 
     def refreshUserAccess(self):
         print("Resetting User Access Token...")
