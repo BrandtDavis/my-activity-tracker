@@ -17,3 +17,7 @@ def save_athlete(athlete={}):
 def delete_athlete_by_id(id):
     result = db.athletes.delete_one({'_id': ObjectId(id)})            
     print(result)
+
+def update_athlete_by_id(id):
+    result = db.athletes.update_one({'_id': ObjectId(id)})            
+    print(result)
