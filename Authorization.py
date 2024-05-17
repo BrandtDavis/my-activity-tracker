@@ -3,23 +3,20 @@ import requests
 import os
 import dotenv
 from dotenv import load_dotenv
-from pprint import pprint
 
 class Authorization:
 
-    def __init__(self):
-        load_dotenv()
-        self.envFile = dotenv.find_dotenv()
-        
+    def __init__(self, env_file):   
+        self.env_file = env_file     
         self.authUrl = 'https://www.strava.com/oauth/token'
 
-        self.clientId = os.getenv("CLIENT_ID")
-        self.clientSecret = os.getenv("CLIENT_SECRET")
-        self.authCode = os.getenv("AUTHORIZATION_CODE")
+        self.clientId = env_file["CLIENT_ID"]
+        self.clientSecret = env_file["CLIENT_SECRET"]
+        self.authCode = env_file["AUTHORIZATION_CODE"]
 
-        self.accessToken = os.getenv("ACCESS_TOKEN")
-        self.refreshToken = os.getenv("REFRESH_TOKEN")
-        self.access_token_expiration = os.getenv("ACCESS_TOKEN_EXPIRATION")
+        self.accessToken = env_file["ACCESS_TOKEN"]
+        self.refreshToken = env_file["REFRESH_TOKEN"]
+        self.access_token_expiration = env_file["ACCESS_TOKEN_EXPIRATION"]
 
     def get_base_auth_params(self):
        return {
@@ -74,9 +71,6 @@ class Authorization:
 
     def is_expired_access_token(self):
         now = round(time.time())
-        print("Now: ", now)
-        print("Access Token: ", self.access_token_expiration)
-        
         if int(self.access_token_expiration) < now:
             print("Access Token Expired")
             return True
