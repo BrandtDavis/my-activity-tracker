@@ -5,3 +5,9 @@ This is a Strava integration to help customize the way your data is presented.
   1. To access activities, change 'scope=read' to 'scope=activities:read' or 'scope=activities:read 
 1. Save the value in the 'code' param of the resulting url
 1. Use this value in the 'authorization.py' file as 'AUTHORIZATION_CODE'
+
+### To Run Individual Test File
+`python3 -m unittest tests/TestAuthorization.py`
+
+### Sources Used for this Project
+https://docs.python-guide.org/writing/structure/
