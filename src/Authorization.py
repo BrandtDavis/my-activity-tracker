@@ -1,49 +1,45 @@
 import time
 import requests
-import os
 import dotenv
-from dotenv import load_dotenv
 
 class Authorization:
 
-    def __init__(self, env_file):   
+    def __init__(self, env_file, env_file_path):   
         self.env_file = env_file     
+        self.env_file_path = env_file_path
+
         self.authUrl = 'https://www.strava.com/oauth/token'
+        self.base_params = self.get_base_auth_params()
 
-        self.clientId = env_file["CLIENT_ID"]
-        self.clientSecret = env_file["CLIENT_SECRET"]
-        self.authCode = env_file["AUTHORIZATION_CODE"]
-
-        self.accessToken = env_file["ACCESS_TOKEN"]
-        self.refreshToken = env_file["REFRESH_TOKEN"]
+        self.access_token = env_file["ACCESS_TOKEN"]
+        self.refresh_token = env_file["REFRESH_TOKEN"]
         self.access_token_expiration = env_file["ACCESS_TOKEN_EXPIRATION"]
 
     def get_base_auth_params(self):
        return {
-            'client_id': self.clientId,
-            'client_secret': self.clientSecret,
-            'code': self.authCode
+            'client_id': self.env_file["CLIENT_ID"],
+            'client_secret': self.env_file["CLIENT_SECRET"],
+            'code': self.env_file["AUTHORIZATION_CODE"]
         }
 
     def authenticate_user(self):
         # Error response for reference:
-        # {'message': 'Bad Request', 'errors': [{'resource': 'AuthorizationCode', 'field': 'code', 'code': 'invalid'}]}
+
         try:
             response = None
-            if self.accessToken == None:
+            if self.access_token == None:
                 response = self.first_time_authentication()
-
-            if self.access_token_expiration == None or self.access_token_expiration == '':
-                response = self.refresh_access_token()
             
-            if self.accessToken != None and self.is_expired_access_token():
+            if self.access_token != None and self.token_refresh_required(self.env_file["ACCESS_TOKEN_EXPIRATION"]):
                 response = self.refresh_access_token()
  
             if response == None:
-                return 
+                return "Unkown error: response = None"
 
             print("RESPONSE: ",  response)
+
             # Extract into a validation/error handling function
+            # {'message': 'Bad Request', 'errors': [{'resource': 'AuthorizationCode', 'field': 'code', 'code': 'invalid'}]}
             if response['errors']:
                 errorList = response['errors']
 
@@ -66,12 +62,16 @@ class Authorization:
             response = requests.post(self.authUrl, 
                                      params=params).json()
             return response
+        
         except requests.exceptions.ConnectionError:
             return 'Connection Error'
 
-    def is_expired_access_token(self):
+    # A token refresh is required under the following conditions:
+    # - 
+    # - 
+    def token_refresh_required(self, access_token_expr):
         now = round(time.time())
-        if int(self.access_token_expiration) < now:
+        if access_token_expr == None or int(access_token_expr) < now:
             print("Access Token Expired")
             return True
         
@@ -80,13 +80,13 @@ class Authorization:
     def refresh_access_token(self):
         print("Refreshing User Access Token...")
         params = self.get_base_auth_params()
-        params['refresh_token'] = self.refreshToken
+        params['refresh_token'] = self.refresh_token
         params['grant_type'] = 'refresh_token'
 
         try:
             response = requests.post(self.authUrl, params=params).json()
-            dotenv.set_key(self.envFile, "ACCESS_TOKEN", response['access_token'])
-            dotenv.set_key(self.envFile, "ACCESS_TOKEN_EXPIRATION", str(response['expires_at']))
+            dotenv.set_key(self.env_file_path, "ACCESS_TOKEN", response['access_token'])
+            dotenv.set_key(self.env_file_path, "ACCESS_TOKEN_EXPIRATION", str(response['expires_at']))
             return response
         
         except ConnectionRefusedError:
