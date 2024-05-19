@@ -71,8 +71,9 @@ class Authorization:
     # - 
     def token_refresh_required(self, access_token_expr):
         now = round(time.time())
-        if access_token_expr == None or int(access_token_expr) < now:
-            print("Access Token Expired")
+        if access_token_expr == '' \
+           or access_token_expr == None \
+           or int(access_token_expr) < now:
             return True
         
         return False
