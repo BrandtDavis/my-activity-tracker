@@ -19,7 +19,7 @@ env_file = dotenv.dotenv_values(env_file_path)
 print(env_file['CLIENT_SECRET'])
 
 auth = Authorization(env_file, env_file_path)
-# auth.authenticate_user()
+auth.authenticate_user()
 
 # activities = getAllUserActivites()
 # pprint(activities[700])
