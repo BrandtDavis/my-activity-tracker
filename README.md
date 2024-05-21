@@ -8,6 +8,7 @@ This is a Strava integration to help customize the way your data is presented.
 
 ### To Run Individual Test File
 `python3 -m unittest tests/TestAuthorization.py`
+(add -v after 'unittest' for more verbose output)
 
 ### Sources Used for this Project
 https://docs.python-guide.org/writing/structure/
