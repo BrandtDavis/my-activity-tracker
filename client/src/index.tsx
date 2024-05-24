@@ -8,6 +8,8 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
+  // Commenting out the below 'React.StrictMode tag prevents double rendering
+  // Source: https://stackoverflow.com/questions/61254372/my-react-component-is-rendering-twice-because-of-strict-mode/72676006#72676006
   // <React.StrictMode>
     <App />
   // </React.StrictMode>
@@ -17,3 +19,4 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
