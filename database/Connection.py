@@ -14,7 +14,7 @@ class Connection:
         # self.conn = self.connect()
 
     def connect(self):
-        print(self.DB_CONN_STRING)
+        # print(self.DB_CONN_STRING)
         try:
             uri = self.DB_CONN_STRING
             client = MongoClient(uri)
