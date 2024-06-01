@@ -1,15 +1,15 @@
 import React from 'react';
 import { LoginPage } from './pages/LoginPage';
+import { LandingPage } from './pages/LandingPage';
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
     <div>
-      <LoginPage />
-      {/* {(typeof data.name !== "string") ? (
-        <p>Loading...</p>
-      ): (<h1>{data.name}</h1>
-      )} */}
-
+      <Routes>
+        <Route path="/" element={<LoginPage />}></Route>
+        <Route path="/home" element={<LandingPage />}></Route>
+      </Routes>
     </div>
   );
 }
