@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,7 +12,9 @@ root.render(
   // Commenting out the below 'React.StrictMode tag prevents double rendering
   // Source: https://stackoverflow.com/questions/61254372/my-react-component-is-rendering-twice-because-of-strict-mode/72676006#72676006
   // <React.StrictMode>
+  <BrowserRouter>
     <App />
+  </BrowserRouter>
   // </React.StrictMode>
 );
 

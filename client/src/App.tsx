@@ -1,15 +1,17 @@
 import React from 'react';
 import { LoginPage } from './pages/LoginPage';
+import { SplashPage } from './pages/SplashPage';
+import { DashboardPage } from './pages/DashboardPage';
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
     <div>
-      <LoginPage />
-      {/* {(typeof data.name !== "string") ? (
-        <p>Loading...</p>
-      ): (<h1>{data.name}</h1>
-      )} */}
-
+      <Routes>
+        <Route path="/" element={<SplashPage />}></Route>
+        <Route path="/login" element={<LoginPage />}></Route>
+        <Route path="/dashboard" element={<DashboardPage />}></Route>
+      </Routes>
     </div>
   );
 }

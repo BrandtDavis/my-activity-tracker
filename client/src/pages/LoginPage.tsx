@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    const navigate = useNavigate();
 
     const loginUser = () => {
         if(username.length === 0){
@@ -18,7 +21,9 @@ export const LoginPage = () => {
                 password: password 
             })
             .then(function (response){
-                console.log(response)
+                if(response.status === 200) {
+                    navigate("/dashboard");
+                }
             })
             .catch(function (error){
                 console.log("Error: ", error);
