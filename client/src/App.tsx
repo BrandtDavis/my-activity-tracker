@@ -1,14 +1,16 @@
 import React from 'react';
 import { LoginPage } from './pages/LoginPage';
-import { LandingPage } from './pages/LandingPage';
+import { SplashPage } from './pages/SplashPage';
+import { DashboardPage } from './pages/DashboardPage';
 import { Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<LoginPage />}></Route>
-        <Route path="/home" element={<LandingPage />}></Route>
+        <Route path="/" element={<SplashPage />}></Route>
+        <Route path="/login" element={<LoginPage />}></Route>
+        <Route path="/dashboard" element={<DashboardPage />}></Route>
       </Routes>
     </div>
   );
