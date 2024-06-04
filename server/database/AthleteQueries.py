@@ -30,3 +30,8 @@ def delete_athlete_by_id(id):
 def update_athlete_by_id(id):
     result = db.athletes.update_one({'_id': ObjectId(id)})            
     print(result)
+
+# Should only be run during initial setup for an athlete
+def add_athlete_activities(activities):
+    result = db.activities.insert_many(activities)
+    print(result)
