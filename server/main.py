@@ -1,6 +1,6 @@
 import os
 from database.Connection import Connection
-from database.AthleteQueries import save_athlete, get_athlete_by_id, delete_athlete_by_id
+from database.AthleteQueries import save_athlete, get_athlete_by_id, delete_athlete_by_id, add_athlete_activities
 
 import dotenv
 
@@ -17,14 +17,15 @@ from src.Athlete import getAuthenticatedAthlete, getAllUserActivites, getAllRunB
 # from application import app
 
 # env_file_path = "./tests/test.env"
-# env_file_path = "./.env"
-# env_file = dotenv.dotenv_values(env_file_path)
+env_file_path = "./.env"
+env_file = dotenv.dotenv_values(env_file_path)
 # print(env_file['CLIENT_SECRET'])
 
-# auth = Authorization(env_file, env_file_path)
-# auth.authenticate_user()
+auth = Authorization(env_file, env_file_path)
+auth.authenticate_user()
 
-# activities = getAllUserActivites()
+activities = getAllUserActivites()
+# add_athlete_activities(activities)
 # pprint(activities[700])
 # print(len(activities))
 
