@@ -1,7 +1,31 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom"
+import axios from "axios";
+
 export const ProfilePage = () => {
-    let firstName = "Brandt"
-    let lastName = "Davis"
-    let email = "Brandt@test.com"
+
+    const [athleteInfo, setAthleteInfo] = useState({
+        first_name: "",
+        last_name: "",
+        email: "",
+    });
+    const { athleteId } = useParams();
+
+    const url = `http://127.0.0.1:5000/athleteInfo?athlete_id=${athleteId}`;     
+    
+
+    useEffect(() => {
+        axios.get(url, {
+            headers: {
+                'Content-type':'application/json', 
+                'Accept':'application/json'
+            },
+        })
+        .then((response) => {
+            console.log(response)
+            setAthleteInfo(response.data)
+        }); 
+    }, []);
 
     return (
         <>
@@ -11,17 +35,17 @@ export const ProfilePage = () => {
 
                 <div className="block ml-4 mt-2">
                     <label className="float" htmlFor="first-name">First Name:</label>
-                    <input className="shadow float ml-2 pl-2" readOnly={true} id="first-name" value={firstName}></input>
+                    <input className="shadow float ml-2 pl-2" readOnly={true} id="first-name" value={athleteInfo.first_name}></input>
                 </div>
 
                 <div className="block ml-4 mt-2">
                     <label className="float" htmlFor="last-name">Last Name:</label>
-                    <input className="text-l shadow ml-2 pl-2" type="text" readOnly={true} id="last-name" value={lastName}></input>
+                    <input className="text-l shadow ml-2 pl-2" type="text" readOnly={true} id="last-name" value={athleteInfo.last_name}></input>
                 </div>
 
                 <div className="block ml-4 mt-2">
                     <label className="float" htmlFor="email">Email:</label>
-                    <input className="text-l shadow ml-2 pl-2" type="email" readOnly={true} id="email" value={email}></input>
+                    <input className="text-l shadow ml-2 pl-2" type="email" readOnly={true} id="email" value={athleteInfo.email}></input>
                 </div>
 
                 <div className="block max-w-lg ml-12 mt-4 mb-4">
