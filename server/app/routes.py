@@ -21,7 +21,7 @@ def athlete_info():
             'status': 200,
             'message': "Success",
             'first_name': data['first_name'],
-            'lasst_name': data['last_name'],
+            'last_name': data['last_name'],
             'email': data['email']
         }
     )
