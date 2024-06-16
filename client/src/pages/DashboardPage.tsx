@@ -1,23 +1,35 @@
+import axios from "axios";
 import React from "react";
+import { useParams } from "react-router-dom"
+import { useEffect, useState } from "react";
 
-import { LineChart, Line } from 'recharts';
-
-const data = [{name: 'Page A', uv: 400, pv: 2400, amt: 2400}];
-const renderLineChart = (
-  <LineChart width={400} height={400} data={data}>
-    <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-  </LineChart>
-);
+import { UserActivityChart } from "../components/UserActivityChart";
 
 export const DashboardPage = () => {
 
+    const [athleteName, setAthleteName] = useState("");
+    const { athleteId } = useParams();
+
+    const url = `http://127.0.0.1:5000/athleteInfo?athlete_id=${athleteId}`;     
+
+    useEffect(() => {
+      axios.get(url, {
+          headers: {
+              'Content-type':'application/json', 
+              'Accept':'application/json'
+          },
+      })
+      .then((response) => {
+          console.log(response)
+          setAthleteName(response.data.first_name)
+      }); 
+    }, []);
+  
     return (
         <div>
-            <h1 className="pl-4">Brandt's Dashboard</h1>
+            <h1 className="pl-4">{athleteName}'s Dashboard</h1>
             <div className="container mx-auto border-2 px-4 py-4">
-                <div className="grow border-2 px-2">
-                   {renderLineChart}
-                </div>
+              <UserActivityChart activityData={{}}/>
             </div>
         </div>
     );
