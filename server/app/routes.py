@@ -1,4 +1,5 @@
 from app import app
+import pymongo
 from flask import render_template, request, jsonify
 from database.AthleteQueries import save_athlete, get_athlete_by_id, get_athlete_by_email, delete_athlete_by_id, get_athlete_activities
 
@@ -32,14 +33,28 @@ def athlete_info():
 @app.route("/athlete_activities", methods=["GET"])
 def athlete_activities():
     athlete_id = request.args["athlete_id"]
-    data = get_athlete_activities(athlete_id)
+    data = get_athlete_activities(int(athlete_id))
 
-    print("Data: ", data)
+    activities = []
+    for doc in data:
+        if doc["sport_type"] != "Run":
+            continue
+
+        if len(activities) == 5:
+            break
+
+        activities.append(
+            {
+                "distance": doc["distance"],
+                "date": doc["start_date"]
+            }
+        ) 
+        
     response = jsonify(
         {
             'status': 200,
             'message': "success",
-
+            'activities': activities
         }
     )
 
