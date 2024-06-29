@@ -26,8 +26,9 @@ export const UserActivityChart = (athleteId: any) => {
     })
     .then((response) => {
 
-      let activities = response.data.activities.map((activity: {date: string, distance: 0}) => {
+      let activities = response.data.activities.map((activity: {date: string, distance: number}) => {
         activity.date = activity.date.split('T')[0];
+        activity.distance = activity.distance / 1000;
         return activity;
       });
 
@@ -47,7 +48,7 @@ export const UserActivityChart = (athleteId: any) => {
         <LineChart width={600} height={300} data={activityData}>
           <Line type="monotone" dataKey="distance" stroke="#8884d8" />
           <CartesianGrid stroke="#ccc" />
-          <XAxis dataKey="date" tick={<CustomizedXAxisTick x={0} y={0} stroke={null} payload={"Page 1"} />}/>
+          <XAxis dataKey="date" tick={<CustomizedXAxisTick x={0} y={0} stroke={null} payload="date" />}/>
           <YAxis />
         </LineChart>
     );
