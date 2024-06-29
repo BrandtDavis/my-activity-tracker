@@ -20,16 +20,15 @@ export const DashboardPage = () => {
           },
       })
       .then((response) => {
-          console.log(response)
           setAthleteName(response.data.first_name)
       }); 
     }, []);
-  
+    
     return (
-        <div>
+        <div className="h-100">
             <h1 className="pl-4">{athleteName}'s Dashboard</h1>
             <div className="container mx-auto border-2 px-4 py-4">
-              <UserActivityChart activityData={{}}/>
+              <UserActivityChart athleteId={athleteId}/>
             </div>
         </div>
     );
