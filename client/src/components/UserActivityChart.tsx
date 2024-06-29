@@ -25,9 +25,13 @@ export const UserActivityChart = (athleteId: any) => {
       },
     })
     .then((response) => {
-      console.log(response)
-      setActivityData(response.data.activities)
-      console.log("ACTIVITIES: ", activityData)
+
+      let activities = response.data.activities.map((activity: {date: string, distance: 0}) => {
+        activity.date = activity.date.split('T')[0];
+        return activity;
+      });
+
+      setActivityData(activities)
     });
   }, []);
 
