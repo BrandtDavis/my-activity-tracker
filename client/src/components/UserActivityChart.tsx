@@ -1,8 +1,24 @@
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
-import React, { useState, useEffect } from "react";
+import React, { PureComponent, useState, useEffect } from "react";
 import axios from "axios";
 
+class CustomizedAxisTick extends PureComponent<{ x: any, y: any, stroke: any, payload: any }> {
+  render() {
+    const { x, y, stroke, payload } = this.props;
+
+    return (
+      <g transform={`translate(${x},${y})`}>
+        <text x={0} y={0} dy={16} textAnchor="end" fill="#666" transform="rotate(-35)">
+          {payload.value}
+        </text>
+      </g>
+    );
+  }
+}
+
 export const UserActivityChart = (athleteId: any) => {
+
+
   const [activityData, setActivityData] = useState(
     [
       {
@@ -40,7 +56,7 @@ export const UserActivityChart = (athleteId: any) => {
         <LineChart width={600} height={300} data={activityData}>
           <Line type="monotone" dataKey="distance" stroke="#8884d8" />
           <CartesianGrid stroke="#ccc" />
-          <XAxis dataKey="date" />
+          <XAxis dataKey="date" tick={<CustomizedAxisTick x={0} y={0} stroke={null} payload={"Page 1"} />}/>
           <YAxis />
         </LineChart>
     );
