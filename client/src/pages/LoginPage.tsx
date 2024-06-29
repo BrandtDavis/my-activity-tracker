@@ -22,7 +22,9 @@ export const LoginPage = () => {
             })
             .then(function (response){
                 if(response.status === 200) {
-                    navigate("/dashboard");
+                    console.log(response.data)
+                    let athleteId = response.data.athlete_id;
+                    navigate(`/dashboard:${athleteId}`);
                 }
             })
             .catch(function (error){

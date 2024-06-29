@@ -24,7 +24,7 @@ env_file = dotenv.dotenv_values(env_file_path)
 auth = Authorization(env_file, env_file_path)
 auth.authenticate_user()
 
-activities = getAllUserActivites()
+# activities = getAllUserActivites()
 # add_athlete_activities(activities)
 # pprint(activities[700])
 # print(len(activities))

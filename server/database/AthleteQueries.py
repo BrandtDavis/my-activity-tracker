@@ -18,7 +18,13 @@ def save_athlete(athlete={}):
     
 def get_athlete_by_id(id):
     result = db.athletes.find_one({'athlete_id': {'$eq': id}})
+    # print(result)
+    return result
+
+def get_athlete_by_email(email):
+    result = db.athletes.find_one({'email': {'$eq': email}})
     print(result)
+    return result
 
 def delete_athlete_by_id(id):
     result = db.athletes.delete_one({'_id': ObjectId(id)})            
@@ -35,3 +41,8 @@ def update_athlete_by_id(id):
 def add_athlete_activities(activities):
     result = db.activities.insert_many(activities)
     print(result)
+
+def get_athlete_activities(athlete_id):
+    result = db.activities.find({'athlete.id': {'$eq': athlete_id}})
+    print(result)
+    return result
