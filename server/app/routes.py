@@ -40,7 +40,7 @@ def athlete_activities():
         if doc["sport_type"] != "Run":
             continue
 
-        if len(activities) == 5:
+        if len(activities) == 8:
             break
 
         activities.append(

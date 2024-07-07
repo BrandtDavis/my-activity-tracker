@@ -1,5 +1,6 @@
-import React, { PureComponent, useState, useEffect } from "react";
+import React, { PureComponent } from "react";
 
+// Source: https://recharts.org/en-US/examples/CustomizedLabelLineChart
 export default class CustomizedXAxisTick extends PureComponent<{ x: any, y: any, stroke: any, payload: any }> {
     render() {
         const { x, y, stroke, payload } = this.props;
@@ -11,5 +12,5 @@ export default class CustomizedXAxisTick extends PureComponent<{ x: any, y: any,
             </text>
           </g>
         );
-      }
+    }
 }
