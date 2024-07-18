@@ -10,10 +10,14 @@ from database.AthleteQueries import get_athlete_activities
 # Returns an array of 2 elements in the form [start_date, end_date]
 # Where:
 #  - Both elements are in the form 'DD-MM-YYYY'
-#  - start_date is the earliest date in the dataset
-#  - end_date is the most recent date in the dataset
+#  - start_date is the earliest start_date in the dataset
+#  - end_date is the most recent start_date_local in the dataset
 def get_activity_list_timeframe(activityList):
-    pass
+    start_dates_df = pd.DataFrame.from_records(activityList)['start_date']
+    start_date = start_dates_df.min().split("T")[0]
+    end_date = start_dates_df.max().split("T")[0] 
+
+    return [start_date, end_date]
 
 # Returns an array of dates, where each date should:
 # - Be a Monday
@@ -28,4 +32,7 @@ def group_activities_by_week():
 # Help: https://stackoverflow.com/questions/9847213/how-do-i-get-the-day-of-week-given-a-date
 activities = get_athlete_activities(95573308)
 
-group_activities_by_week(activities)
+timeframe = get_activity_list_timeframe(activities)
+print(f'\nTimeframe: {timeframe}\n')
+
+# group_activities_by_week(activities)
