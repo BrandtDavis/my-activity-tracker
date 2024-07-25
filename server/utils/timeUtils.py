@@ -52,26 +52,37 @@ def get_weekday(date):
 
 # Group activities into their respective weeks or "date windows"
 def group_activities_by_week(activityList, date_windows):
-    df = pd.DataFrame.from_records(activityList).sort_values(by='start_date')['start_date']
+    df = pd.DataFrame.from_records(activityList).sort_values(by='start_date')
 
-    # print(df)
-    # Iterate over df
-    # if df[i] > start_date && df[i] < end_date:
-    #   dict[start_date].append(df[i])
+    activities_by_week = {}
+    for i in range(len(date_windows) - 1):
 
-    # Need to check for:
-    #  - 
+        activities_by_week[date_windows[i]] = []
 
+        rows = df.loc[(df['start_date'] >= date_windows[i]) & (df['start_date'] < date_windows[i+1])]
+        
+        activities_by_week[date_windows[i]].append(rows['start_date'])
+
+        # Special case for the final date window
+        if (i + 1 == len(date_windows) - 1):
+            activities_by_week[date_windows[i+1]] = []
+            rows = df.loc[(df['start_date'] >= date_windows[i+1])]
+            activities_by_week[date_windows[i+1]].append(rows['start_date'])
+            break
+    
+    return activities_by_week
 
 
 
 activities = get_athlete_activities(95573308)
+
 json_activities = pd.DataFrame(activities)
 
 timeframe = get_activity_list_timeframe(json_activities)
-print(timeframe)
+# print(timeframe)
 
 date_windows = get_date_windows(timeframe[0], timeframe[1])
-print(date_windows)
+# print(date_windows)
 
-group_activities_by_week(json_activities, date_windows)
+grouped_activities = group_activities_by_week(json_activities, date_windows)
+# print(grouped_activities)
