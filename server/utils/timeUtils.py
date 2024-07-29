@@ -63,7 +63,6 @@ def group_activities_by_week(activityList, date_windows):
 
         rows = df.loc[(df['start_date'] >= date_windows[i]) & (df['start_date'] < date_windows[i+1])]
 
-        # activities_by_week[date_windows[i]].append(rows[['id', 'distance', 'start_date']].apply(lambda x: x.to_json(), axis=1))
         activities_by_week[date_windows[i]].append(rows[['id', 'distance', 'start_date']].to_json(orient='records', lines=True).splitlines())
 
         # Special case for the final date window
@@ -71,10 +70,8 @@ def group_activities_by_week(activityList, date_windows):
             activities_by_week[date_windows[i+1]] = []
             rows = df.loc[(df['start_date'] >= date_windows[i+1])]
             activities_by_week[date_windows[i+1]].append(rows[['id', 'distance', 'start_date']].to_json(orient='records', lines=True).splitlines())
-            # activities_by_week[date_windows[i+1]].append(rows[['id', 'distance', 'start_date']].apply(lambda x: x.to_json(), axis=1))
             break
     
-    # pprint.pp(activities_by_week, indent=2)
     return activities_by_week
 
 def get_grouped_activities(id):
