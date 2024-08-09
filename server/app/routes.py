@@ -46,8 +46,17 @@ def athlete_activities():
         # activities = json.loads(data[date][0])
         for activity in data[date][0]:
             print(activity)
+            if len(activities_data) == 8:
+                break 
 
             if activity == '':
+                activities_data.append(
+                    {
+                        "week": date,
+                        "distance": 0,
+                        "date": date,
+                    }
+                )
                 continue
 
             activity = json.loads(activity)
