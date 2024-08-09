@@ -1,6 +1,7 @@
 import pandas as pd
 from datetime import datetime, timedelta
 from database.AthleteQueries import get_athlete_activities
+import pprint
 
 # Want: 
 #  1. Look at current activity data -> Identify date windows 
@@ -51,6 +52,7 @@ def get_weekday(date):
     return get_date_object(date).isoweekday()
 
 # Group activities into their respective weeks or "date windows"
+# Source for DF -> row-wise json: https://stackoverflow.com/questions/36051134/pandas-row-to-json
 def group_activities_by_week(activityList, date_windows):
     df = pd.DataFrame.from_records(activityList).sort_values(by='start_date')
 
@@ -60,29 +62,26 @@ def group_activities_by_week(activityList, date_windows):
         activities_by_week[date_windows[i]] = []
 
         rows = df.loc[(df['start_date'] >= date_windows[i]) & (df['start_date'] < date_windows[i+1])]
-        
-        activities_by_week[date_windows[i]].append(rows['start_date'])
+
+        activities_by_week[date_windows[i]].append(rows[['id', 'distance', 'start_date']].to_json(orient='records', lines=True).splitlines())
 
         # Special case for the final date window
         if (i + 1 == len(date_windows) - 1):
             activities_by_week[date_windows[i+1]] = []
             rows = df.loc[(df['start_date'] >= date_windows[i+1])]
-            activities_by_week[date_windows[i+1]].append(rows['start_date'])
+            activities_by_week[date_windows[i+1]].append(rows[['id', 'distance', 'start_date']].to_json(orient='records', lines=True).splitlines())
             break
     
     return activities_by_week
 
+def get_grouped_activities(id):
+    activities = get_athlete_activities(id)
+    json_activities = pd.DataFrame(activities)
+    
+    timeframe = get_activity_list_timeframe(json_activities)
 
+    date_windows = get_date_windows(timeframe[0], timeframe[1])
 
-activities = get_athlete_activities(95573308)
+    grouped_activities = group_activities_by_week(json_activities, date_windows)
 
-json_activities = pd.DataFrame(activities)
-
-timeframe = get_activity_list_timeframe(json_activities)
-# print(timeframe)
-
-date_windows = get_date_windows(timeframe[0], timeframe[1])
-# print(date_windows)
-
-grouped_activities = group_activities_by_week(json_activities, date_windows)
-# print(grouped_activities)
+    return grouped_activities

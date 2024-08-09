@@ -1,7 +1,11 @@
 from app import app
+import pandas as pd
 import pymongo
 from flask import render_template, request, jsonify
 from database.AthleteQueries import save_athlete, get_athlete_by_id, get_athlete_by_email, delete_athlete_by_id, get_athlete_activities
+from utils.timeUtils import get_grouped_activities
+
+import json
 
 from database.Connection import Connection
 conn = Connection()
@@ -33,30 +37,46 @@ def athlete_info():
 @app.route("/athlete_activities", methods=["GET"])
 def athlete_activities():
     athlete_id = request.args["athlete_id"]
-    data = get_athlete_activities(int(athlete_id))
+    data = get_grouped_activities(int(athlete_id))
+    date_keys = data.keys()
 
-    activities = []
-    for doc in data:
-        if doc["sport_type"] != "Run":
-            continue
+    activities_data = []
+    for date in date_keys:
+        # print(data[date][0])
+        # activities = json.loads(data[date][0])
+        for activity in data[date][0]:
+            print(activity)
+            if len(activities_data) == 8:
+                break 
 
-        if len(activities) == 8:
-            break
+            if activity == '':
+                activities_data.append(
+                    {
+                        "week": date,
+                        "distance": 0,
+                        "date": date,
+                    }
+                )
+                continue
 
-        activities.append(
-            {
-                "distance": doc["distance"],
-                "date": doc["start_date"]
-            }
-        ) 
-        
+            activity = json.loads(activity)
+            
+            activities_data.append(
+                {
+                    "week": date,
+                    "distance": activity["distance"],
+                    "date": activity["start_date"]
+                }
+            ) 
+            
     response = jsonify(
         {
             'status': 200,
             'message': "success",
-            'activities': activities
+            'activities': activities_data
         }
     )
+
 
     return response
 

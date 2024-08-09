@@ -25,8 +25,7 @@ export const UserActivityChart = (athleteId: any) => {
       },
     })
     .then((response) => {
-
-      let activities = response.data.activities.map((activity: {date: string, distance: number}) => {
+      let activities = response.data.activities.map((activity: {week: string, date: string, distance: number}) => {
         activity.date = activity.date.split('T')[0];
         activity.distance = activity.distance / 1000;
         return activity;
@@ -35,14 +34,6 @@ export const UserActivityChart = (athleteId: any) => {
       setActivityData(activities)
     });
   }, []);
-
-  // Placeholder data - For testing formatting, etc.
-  // const data = [
-  //   {date: 'Page A', distance: 400, amt: 5},
-  //   {date: 'Page B', distance: 100, pv: 2400},
-  //   {date: 'Page C', distance: 250, pv: 2400, amt: 2400},
-  //   {date: 'Page C', distance: 250, pv: 2400, amt: 2400},
-  // ];
 
     const renderLineChart = (
         <LineChart width={600} height={300} data={activityData}>
