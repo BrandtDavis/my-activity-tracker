@@ -1,9 +1,9 @@
 import axios from "axios";
-import React from "react";
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
 
 import { UserActivityChart } from "../components/UserActivityChart";
+import { ActivityWeekSelector } from "../components/ActivityWeekSelector"
 
 export const DashboardPage = () => {
 
@@ -29,6 +29,7 @@ export const DashboardPage = () => {
             <h1 className="pl-4">{athleteName}'s Dashboard</h1>
             <div className="container mx-auto border-2 px-4 py-4">
               <UserActivityChart athleteId={athleteId}/>
+              <ActivityWeekSelector />
             </div>
         </div>
     );
