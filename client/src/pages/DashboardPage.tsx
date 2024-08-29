@@ -3,12 +3,7 @@ import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
 
 import { ActivityStatCard } from "../components/ActivityStatCard";
-interface ActivityStatCardProps {
-    header: string
-    body: string
-    data?: number
-    unit?: string
-}
+import { ActivityStatCardProps } from "../interfaces/props/propsInterfaces";
 
 export const DashboardPage = () => {
 

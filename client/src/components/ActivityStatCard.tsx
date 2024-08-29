@@ -1,11 +1,5 @@
 import { Component } from "react"
-
-interface ActivityStatCardProps {
-    header: string
-    body: string
-    data?: number
-    unit?: string
-}
+import { ActivityStatCardProps } from "../interfaces/props/propsInterfaces";
 export class ActivityStatCard extends Component<ActivityStatCardProps, {}> {
 
     render() {
