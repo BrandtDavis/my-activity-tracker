@@ -19,15 +19,14 @@ export class ActivityStatCard extends Component<ActivityStatCardProps, {}> {
 
         return (
             <>
-                <div className="max-w-sm rounded overflow-hidden shadow-lg">
-                <img className="w-full" src="" alt="Clock icon"/>
-                <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">{this.props.header}</div>
-                    <p className="text-gray-700 text-base">{this.props.body}</p>
-                    <span className="align-middle mx-auto">{dataText}</span>
-                </div>
-                <div className="px-6 pt-4 pb-2">
-                </div>
+                <div className="mx-auto col-span-1 w-32 md:w-72 lg:w-96 h-fit bg-gray-100 hover:bg-base-200 max-w-sm rounded overflow-hidden shadow-lg">
+                    <div className="px-6 py-4 center">
+                        <div className="font-bold text-xl mb-2">{this.props.header}</div>
+                        <p className="text-gray-700 text-base">{this.props.body}</p>
+                    </div>
+                    <div className="px-6 pt-4 pb-2">
+                        <span className="align-middle font-bold">{dataText}</span>
+                    </div>
                 </div>
             </>
         )
