@@ -55,17 +55,21 @@ export const DashboardPage = () => {
     return (
         <div className="h-100">
             <h1 className="pl-4">{athleteName}'s Dashboard</h1>
-            <div className="flex flex-row gap-4 flex-wrap mx-auto border-2">
-                {
-                    activityCardGridData.map((item) => (
-                        <ActivityStatCard 
-                            header={item.header}
-                            body={item.body}
-                            data={item.data}
-                            unit={item.unit}
-                        />
-                    ))
-                }
+            <div className="mx-auto py-4 border-2 w-2/3">
+                <ul className="flex flex-row gap-4 flex-wrap justify-center">
+                    {
+                        activityCardGridData.map((activityStat) => (
+                            <li>
+                                <ActivityStatCard 
+                                    header={activityStat.header}
+                                    body={activityStat.body}
+                                    data={activityStat.data}
+                                    unit={activityStat.unit}
+                                />
+                            </li>
+                        ))
+                    }
+                </ul>
             </div>
         </div>
     );
