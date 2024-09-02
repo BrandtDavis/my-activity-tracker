@@ -14,4 +14,6 @@ This is a Strava integration to help customize the way your data is presented.
 (add -v after 'unittest' for more verbose output)
 
 ### Sources Used for this Project
-https://docs.python-guide.org/writing/structure/
+- https://docs.python-guide.org/writing/structure/
+- https://charles-bryant.gitbook.io/hello-react-and-typescript/typescriptandreact
+- https://v1.tailwindcss.com/components/cards
